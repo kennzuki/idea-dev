@@ -1,6 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
+import type { Idea } from '@/types';
 
-const fetchIdea = async (ideaId: string) => {
+
+const fetchIdea = async (ideaId: string):Promise<Idea> => {
    const res = await fetch(`/api/ideas/${ideaId}`);
   
   if(!res.ok){
@@ -9,15 +12,34 @@ const fetchIdea = async (ideaId: string) => {
   return res.json();
 }
 
+const IdeaQueryOptions = (ideaId:string)=>queryOptions({
+  queryKey: ['idea', ideaId],
+  queryFn:()=> fetchIdea(ideaId),
+})
+
 export const Route = createFileRoute('/ideas/$ideasid/')({
   component: IdeaDetailsId,
-  loader: async ({ params }) => {
-    return fetchIdea(params.ideasid);
+  loader: async ({ params, context: {queryClient} }) => {
+    return queryClient.ensureQueryData(IdeaQueryOptions(params.ideasid));
   }
  
 })
 
 function IdeaDetailsId() {
-  const idea = Route.useLoaderData();
-  return <div>Hello "/ideas/$ideasid/"!</div>
+  const {ideasid} = Route.useParams();
+  const {data:idea }= useSuspenseQuery(IdeaQueryOptions(ideasid));
+  
+  return <div className='p-8'>
+     <Link to='/ideas' className='text-blue-500 underline block mb-4'>
+        Back To Ideas
+      </Link>
+      <h2 className='text-2xl font-bold'>{idea.title}</h2>
+    <p className='mt-2'>{idea.description}</p>
+     <button
+           
+            className='text-sm bg-red-600 hover:bg-red-700 text-white mt-4 px-4 py-2 rounded transition disabled:opacity:50'
+          >
+            Edit
+          </button>
+  </div>
 }
