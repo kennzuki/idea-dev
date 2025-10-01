@@ -1,0 +1,31 @@
+{
+  "files.watcherExclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "search.exclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "files.readonlyInclude": {
+    "**/routeTree.gen.ts": true
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#fb0045",
+    "activityBar.background": "#fb0045",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#3ddf00",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#fb0045",
+    "statusBar.background": "#c80037",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#fb0045",
+    "statusBarItem.remoteBackground": "#c80037",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#c80037",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#c8003799",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#C80037"
+}
