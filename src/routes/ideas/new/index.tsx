@@ -1,10 +1,12 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import type { Idea } from '@/types';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createIdea } from '@/api/ideas';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+
 
 export const Route = createFileRoute('/ideas/new/')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   const navigate = useNavigate();
@@ -13,11 +15,30 @@ function RouteComponent() {
   const [summary, setSummary] = useState('');
   const [tags, setTags] = useState('');
 
-  return  <div className='space-y-4'>
+const{mutateAsync,isPending}=useMutation({
+  mutationFn: createIdea,
+  onSuccess: () => {
+    navigate({to:'/ideas'})
+  }
+})
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if(!title || !summary || !description || !tags) return alert('Please fill out all fields')
+    try {
+      await mutateAsync({ title, summary, description, tags: tags.split(',').map((tag) => tag.trim()).filter((tag) => tag !== '') });
+    } catch (error) {
+      console.error(error);
+      alert('Error creating idea');
+    }
+  }
+
+  return (
+    <div className='space-y-4'>
       <div className='flex justify-between items-center mb-4'>
         <h1 className='text-2xl font-bold'>Create New Idea</h1>
       </div>
-      <form  className='space-y-2'>
+      <form onSubmit={handleSubmit} className='space-y-2'>
         <div>
           <label
             htmlFor='title'
@@ -28,7 +49,8 @@ function RouteComponent() {
           <input
             id='title'
             type='text'
-           
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
             placeholder='Enter idea title'
           />
@@ -44,7 +66,8 @@ function RouteComponent() {
           <input
             id='summary'
             type='text'
-            
+            value={summary}
+            onChange={(e) => setSummary(e.target.value)}
             className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
             placeholder='Enter idea summary'
           />
@@ -59,7 +82,8 @@ function RouteComponent() {
           </label>
           <textarea
             id='body'
-            
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             rows={6}
             className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
             placeholder='Write out the description of your idea'
@@ -76,21 +100,23 @@ function RouteComponent() {
           <input
             id='tags'
             type='text'
-            
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
             className='w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
             placeholder='optional tags, comma separated'
           />
         </div>
 
-        <div className='mt-5 mx-auto text-center'>
+        <div className='mt-5'>
           <button
             type='submit'
-            
-            className='block w-1/2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed'
+            disabled={isPending}
+            className='block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed'
           >
-            Save
+            {isPending ? 'Creating...' : 'Create Idea'}
           </button>
         </div>
       </form>
     </div>
+  );
 }
