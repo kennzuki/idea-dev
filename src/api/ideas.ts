@@ -16,3 +16,8 @@ export const createIdea = async (newIdea: {
   const res = await api.post('/ideas',{... newIdea,createdAt: new Date().toISOString()});
   return res.data
 } 
+
+export const deleteIdea = async (ideaId: string): Promise<void> => {
+  const res = await api.delete(`/ideas/${ideaId}`);
+  return res.data;
+};
