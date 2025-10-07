@@ -15,20 +15,20 @@ const IdeaQueryOptions = (ideaId:string)=>queryOptions({
   queryFn:()=> fetchIdea(ideaId),
 })
 
-export const Route = createFileRoute('/ideas/$ideasid/')({
+export const Route = createFileRoute('/ideas/$ideasId/')({
   component: IdeaDetailsId,
   loader: async ({ params, context: {queryClient} }) => {
-    return queryClient.ensureQueryData(IdeaQueryOptions(params.ideasid));
+    return queryClient.ensureQueryData(IdeaQueryOptions(params.ideasId));
   }
  
 })
 
 function IdeaDetailsId() {
-  const {ideasid} = Route.useParams();
-  const {data:idea }= useSuspenseQuery(IdeaQueryOptions(ideasid));
+  const {ideasId} = Route.useParams();
+  const {data:idea }= useSuspenseQuery(IdeaQueryOptions(ideasId));
   const navigate = useNavigate();
   const { mutateAsync:deleteMutate, isPending } = useMutation({
-    mutationFn: () => deleteIdea(ideasid), 
+    mutationFn: () => deleteIdea(ideasId), 
     onSuccess: () => navigate({ to: '/ideas' })
   })
   
@@ -44,6 +44,12 @@ function IdeaDetailsId() {
       </Link>
       <h2 className='text-2xl font-bold'>{idea.title}</h2>
     <p className='mt-2'>{idea.description}</p>
+    <div className="flex gap-4 mt-4">
+      <Link to={`/ideas/${ideasId}/edit`} params={{ ideasId }}
+      
+      className='bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition inline-block mt-4'>
+        Edit Idea
+      </Link>
      <button
            disabled={isPending}
             onClick={handleDelete}
@@ -51,5 +57,7 @@ function IdeaDetailsId() {
           >
            {isPending ? 'Deleting...' : 'Delete Idea'}
           </button>
+    </div>
+    
   </div>
 }

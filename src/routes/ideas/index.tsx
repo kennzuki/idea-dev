@@ -36,7 +36,7 @@ function IdeasPage() {
       <h1 className='text-2xl capitalize font-bold'>ideas</h1>
       <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         {ideas.map((idea) => (
-          <IdeaCard key={idea.id} idea={idea} />
+          <IdeaCard key={idea._id} idea={idea} />
         ))}
       </ul>
     </div>
