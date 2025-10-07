@@ -13,7 +13,7 @@ const ideaQueryOptions = (id: string) =>
     queryFn: () => fetchIdea(id),
   });
 
-export const Route = createFileRoute('/ideas/$ideasId/edit')({
+export const Route = createFileRoute('/ideas/$ideaId/edit')({
   component: IdeaEditPage,
   loader: async ({ params, context: { queryClient } }) => {
     return queryClient.ensureQueryData(ideaQueryOptions(params.ideaId));
@@ -28,7 +28,7 @@ function IdeaEditPage() {
   const [title, setTitle] = useState(idea.title);
   const [summary, setSummary] = useState(idea.summary);
   const [description, setDescription] = useState(idea.description);
-  const [tagsInput, setTagsInput] = useState(idea.tags.join(','));
+  const [tagsInput, setTagsInput] = useState(idea.tags.join(', '));
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: () =>

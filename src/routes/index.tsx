@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Lightbulb } from 'lucide-react';
-import { fetchIdea } from '@/api/ideas';
+import { fetchIdeas } from '@/api/ideas';
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import IdeaCard from '@/component/IdeaCard';
 
 const ideasQueryOptions = queryOptions({
-  queryKey: ['ideas'],
-  queryFn: () => fetchIdea(),
+  queryKey: ['ideas', { limit: 3 }],
+  queryFn: () => fetchIdeas(3),
 });
 
 export const Route = createFileRoute('/')({
@@ -17,7 +17,7 @@ export const Route = createFileRoute('/')({
 
 function HomePage() {
   const { data: ideas } = useSuspenseQuery(ideasQueryOptions);
-  const latestIdeas = ideas.slice(0, 3).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
   return (
     <div className='flex flex-col md:flex-row items-start justify-between gap-10 p-6 text-blue-600'>
       <div className='flex flex-col items-start gap-4'>
@@ -35,7 +35,7 @@ function HomePage() {
           Latest Ideas
         </h2>
         <div className='space-y-6'>
-          {latestIdeas.map((idea) => (
+          {ideas.map((idea) => (
             <IdeaCard key={idea._id} idea={idea} button={false} />
           ))}
         </div>

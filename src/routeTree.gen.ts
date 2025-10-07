@@ -12,8 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as IdeasIndexRouteImport } from './routes/ideas/index'
 import { Route as IdeasNewIndexRouteImport } from './routes/ideas/new/index'
-import { Route as IdeasIdeasIdIndexRouteImport } from './routes/ideas/$ideasId/index'
-import { Route as IdeasIdeasIdEditRouteImport } from './routes/ideas/$ideasId/edit'
+import { Route as IdeasIdeaIdIndexRouteImport } from './routes/ideas/$ideaId/index'
+import { Route as IdeasIdeaIdEditRouteImport } from './routes/ideas/$ideaId/edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -30,37 +30,37 @@ const IdeasNewIndexRoute = IdeasNewIndexRouteImport.update({
   path: '/ideas/new/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IdeasIdeasIdIndexRoute = IdeasIdeasIdIndexRouteImport.update({
-  id: '/ideas/$ideasId/',
-  path: '/ideas/$ideasId/',
+const IdeasIdeaIdIndexRoute = IdeasIdeaIdIndexRouteImport.update({
+  id: '/ideas/$ideaId/',
+  path: '/ideas/$ideaId/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IdeasIdeasIdEditRoute = IdeasIdeasIdEditRouteImport.update({
-  id: '/ideas/$ideasId/edit',
-  path: '/ideas/$ideasId/edit',
+const IdeasIdeaIdEditRoute = IdeasIdeaIdEditRouteImport.update({
+  id: '/ideas/$ideaId/edit',
+  path: '/ideas/$ideaId/edit',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ideas': typeof IdeasIndexRoute
-  '/ideas/$ideasId/edit': typeof IdeasIdeasIdEditRoute
-  '/ideas/$ideasId': typeof IdeasIdeasIdIndexRoute
+  '/ideas/$ideaId/edit': typeof IdeasIdeaIdEditRoute
+  '/ideas/$ideaId': typeof IdeasIdeaIdIndexRoute
   '/ideas/new': typeof IdeasNewIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ideas': typeof IdeasIndexRoute
-  '/ideas/$ideasId/edit': typeof IdeasIdeasIdEditRoute
-  '/ideas/$ideasId': typeof IdeasIdeasIdIndexRoute
+  '/ideas/$ideaId/edit': typeof IdeasIdeaIdEditRoute
+  '/ideas/$ideaId': typeof IdeasIdeaIdIndexRoute
   '/ideas/new': typeof IdeasNewIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ideas/': typeof IdeasIndexRoute
-  '/ideas/$ideasId/edit': typeof IdeasIdeasIdEditRoute
-  '/ideas/$ideasId/': typeof IdeasIdeasIdIndexRoute
+  '/ideas/$ideaId/edit': typeof IdeasIdeaIdEditRoute
+  '/ideas/$ideaId/': typeof IdeasIdeaIdIndexRoute
   '/ideas/new/': typeof IdeasNewIndexRoute
 }
 export interface FileRouteTypes {
@@ -68,25 +68,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/ideas'
-    | '/ideas/$ideasId/edit'
-    | '/ideas/$ideasId'
+    | '/ideas/$ideaId/edit'
+    | '/ideas/$ideaId'
     | '/ideas/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ideas' | '/ideas/$ideasId/edit' | '/ideas/$ideasId' | '/ideas/new'
+  to: '/' | '/ideas' | '/ideas/$ideaId/edit' | '/ideas/$ideaId' | '/ideas/new'
   id:
     | '__root__'
     | '/'
     | '/ideas/'
-    | '/ideas/$ideasId/edit'
-    | '/ideas/$ideasId/'
+    | '/ideas/$ideaId/edit'
+    | '/ideas/$ideaId/'
     | '/ideas/new/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   IdeasIndexRoute: typeof IdeasIndexRoute
-  IdeasIdeasIdEditRoute: typeof IdeasIdeasIdEditRoute
-  IdeasIdeasIdIndexRoute: typeof IdeasIdeasIdIndexRoute
+  IdeasIdeaIdEditRoute: typeof IdeasIdeaIdEditRoute
+  IdeasIdeaIdIndexRoute: typeof IdeasIdeaIdIndexRoute
   IdeasNewIndexRoute: typeof IdeasNewIndexRoute
 }
 
@@ -113,18 +113,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdeasNewIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ideas/$ideasId/': {
-      id: '/ideas/$ideasId/'
-      path: '/ideas/$ideasId'
-      fullPath: '/ideas/$ideasId'
-      preLoaderRoute: typeof IdeasIdeasIdIndexRouteImport
+    '/ideas/$ideaId/': {
+      id: '/ideas/$ideaId/'
+      path: '/ideas/$ideaId'
+      fullPath: '/ideas/$ideaId'
+      preLoaderRoute: typeof IdeasIdeaIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ideas/$ideasId/edit': {
-      id: '/ideas/$ideasId/edit'
-      path: '/ideas/$ideasId/edit'
-      fullPath: '/ideas/$ideasId/edit'
-      preLoaderRoute: typeof IdeasIdeasIdEditRouteImport
+    '/ideas/$ideaId/edit': {
+      id: '/ideas/$ideaId/edit'
+      path: '/ideas/$ideaId/edit'
+      fullPath: '/ideas/$ideaId/edit'
+      preLoaderRoute: typeof IdeasIdeaIdEditRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -133,8 +133,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   IdeasIndexRoute: IdeasIndexRoute,
-  IdeasIdeasIdEditRoute: IdeasIdeasIdEditRoute,
-  IdeasIdeasIdIndexRoute: IdeasIdeasIdIndexRoute,
+  IdeasIdeaIdEditRoute: IdeasIdeaIdEditRoute,
+  IdeasIdeaIdIndexRoute: IdeasIdeaIdIndexRoute,
   IdeasNewIndexRoute: IdeasNewIndexRoute,
 }
 export const routeTree = rootRouteImport

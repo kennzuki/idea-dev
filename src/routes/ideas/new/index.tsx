@@ -1,37 +1,49 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { createIdea } from '@/api/ideas';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-
+import { createIdea } from '@/api/ideas';
 
 export const Route = createFileRoute('/ideas/new/')({
-  component: RouteComponent,
+  component: NewIdeaPage,
 });
 
-function RouteComponent() {
+function NewIdeaPage() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
   const [summary, setSummary] = useState('');
+  const [description, setDescription] = useState('');
   const [tags, setTags] = useState('');
 
-const{mutateAsync,isPending}=useMutation({
-  mutationFn: createIdea,
-  onSuccess: () => {
-    navigate({to:'/ideas'})
-  }
-})
-  
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: createIdea,
+    onSuccess: () => {
+      navigate({ to: '/ideas' });
+    },
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if(!title || !summary || !description || !tags) return alert('Please fill out all fields')
+
+    if (!title.trim() || !summary.trim() || !description.trim()) {
+      alert('Please fill in all fields');
+      return;
+    }
+
     try {
-      await mutateAsync({ title, summary, description, tags: tags.split(',').map((tag) => tag.trim()).filter((tag) => tag !== '') });
+      await mutateAsync({
+        title,
+        summary,
+        description,
+        tags: tags
+          .split(',')
+          .map((tag) => tag.trim())
+          .filter((tag) => tag !== ''),
+      });
     } catch (error) {
       console.error(error);
-      alert('Error creating idea');
+      alert('Something went wrong');
     }
-  }
+  };
 
   return (
     <div className='space-y-4'>

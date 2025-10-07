@@ -1,9 +1,9 @@
 import {
   HeadContent,
+  Link,
   Outlet,
-  createRootRouteWithContext,Link
+  createRootRouteWithContext,
 } from '@tanstack/react-router';
-
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { QueryClient } from '@tanstack/react-query';
 import Header from '@/component/Header';
@@ -28,9 +28,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootLayout,
   notFoundComponent: NotFound,
 });
-  
-    
- function RootLayout() {
+
+function RootLayout() {
   return (
     <div className='min-h-screen bg-gray-100 flex flex-col'>
       <HeadContent />
@@ -44,7 +43,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     </div>
   );
 }
-
 
 function NotFound() {
   return (
